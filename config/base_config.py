@@ -4,14 +4,19 @@ from dataclasses import dataclass, field
 from typing import List, Dict, Any
 from pathlib import Path
 import yaml
+import kagglehub
+
+# path = kagglehub.dataset_download("balraj98/deepglobe-land-cover-classification-dataset")
+
+# print("Path to dataset files: " , path)
 
 @dataclass
 class DataConfig:
-    train_images_path: str = "training_images.pkl"
-    train_masks_path: str = "training_masks.pkl"
-    test_images_path: str = "test_images.pkl"
-    test_masks_path: str = "test_masks.pkl"
-    num_classes: int = ...
+    train_images_path: str = "data\data_files\train\images"
+    train_masks_path: str = "data\data_files\train\masks"
+    test_images_path: str = None
+    test_masks_path: str = None
+    num_classes: int = 7
     img_height: int = ...
     img_width: int = ...
     val_split: float = 0.2
