@@ -9,21 +9,73 @@ import os
 import shutil
 from PIL import Image
 
-# dir = r'path/to/masks/and/images
+def resize_images_in_folder(input_folder: str, output_folder: str, size: Tuple[int, int] = (256, 256)):
+    """
+    Resize all images in a folder to specified dimensions.
+    
+    Args:
+        input_folder: Path to folder containing images
+        output_folder: Path to save resized images
+        size: Target size as (width, height). Default is (256, 256)
+    """
+    input_path = Path(input_folder)
+    output_path = Path(output_folder)
+    output_path.mkdir(parents=True, exist_ok=True)
+    
+    supported_formats = {'.jpg', '.jpeg', '.png', '.bmp', '.tiff', '.tif'}
+    image_files = [f for f in input_path.iterdir() if f.suffix.lower() in supported_formats]
+    
+    print(f"Found {len(image_files)} images to resize")
+    
+    for img_file in image_files:
+        try:
+            with Image.open(img_file) as img:
+                resized_img = img.resize(size, Image.Resampling.LANCZOS)
+                output_file = output_path / img_file.name
+                resized_img.save(output_file)
+                print(f"Resized: {img_file.name}")
+        except Exception as e:
+            print(f"Error processing {img_file.name}: {e}")
+    
+    print(f"Completed! Resized images saved to {output_folder}")
+
+# resize_images_in_folder(
+#     input_folder=r"C:\Users\10295498\OneDrive - BD\Desktop\deepglobe_cv\deepglobe_cv\data\data_files\train\images",
+#     output_folder=r"C:\Users\10295498\OneDrive - BD\Desktop\deepglobe_cv\deepglobe_cv\data\data_files\train\images_resized",
+#     size=(256, 256)
+# )
+# resize_images_in_folder(
+#     input_folder=r"C:\Users\10295498\OneDrive - BD\Desktop\deepglobe_cv\deepglobe_cv\data\data_files\train\masks",
+#     output_folder=r"C:\Users\10295498\OneDrive - BD\Desktop\deepglobe_cv\deepglobe_cv\data\data_files\train\masks_resized",
+#     size=(256, 256)
+# )
+
+# resize_images_in_folder(
+#     input_folder=r"C:\Users\10295498\OneDrive - BD\Desktop\deepglobe_cv\deepglobe_cv\data\data_files\test",
+#     output_folder=r"C:\Users\10295498\OneDrive - BD\Desktop\deepglobe_cv\deepglobe_cv\data\data_files\test_resized",
+#     size=(256, 256)
+# )
+
+# resize_images_in_folder(
+#     input_folder=r"C:\Users\10295498\OneDrive - BD\Desktop\deepglobe_cv\deepglobe_cv\data\data_files\val",
+#     output_folder=r"C:\Users\10295498\OneDrive - BD\Desktop\deepglobe_cv\deepglobe_cv\data\data_files\val_resized",
+#     size=(256, 256)
+# )
+# dir = ...
 # #clean train folder
 # for file in os.listdir(dir):
 #     if 'mask' in file:
 #         print(f'moving file: {file} to masks')
-#         shutil.move(os.path.join(dir,file),r'path/to/masks/and/images')
+#         shutil.move(os.path.join(dir,file),...)
 #     elif 'sat' in file:
 #         print(f'moving file: {file} to images')
-#         shutil.move(os.path.join(dir,file), r'path/to/masks/and/images')
+#         shutil.move(os.path.join(dir,file), ...)
 #     else:
 #         pass
 
 #transform data for use
-IMAGES_DIR = r'C:\Users\zaleo\Desktop\deepglobe_cv\deepglobe_cv\data\data_files\train\images'
-MASKS_DIR = r'C:\Users\zaleo\Desktop\deepglobe_cv\deepglobe_cv\data\data_files\train\masks'
+# IMAGES_DIR = r'C:\Users\10295498\OneDrive - BD\Desktop\deepglobe_cv\deepglobe_cv\data\data_files\train\images'
+# MASKS_DIR = r'C:\Users\10295498\OneDrive - BD\Desktop\deepglobe_cv\deepglobe_cv\data\data_files\train\masks'
 images = [] 
 
 # print('transforming images to .pkl')

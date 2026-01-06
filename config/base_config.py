@@ -12,13 +12,13 @@ import kagglehub
 
 @dataclass
 class DataConfig:
-    train_images_path: str = "data\data_files\train\images"
-    train_masks_path: str = "data\data_files\train\masks"
+    train_images_path: str = r"data\data_files\train\images"
+    train_masks_path: str = r"data\data_files\train\masks"
     test_images_path: str = None
     test_masks_path: str = None
     num_classes: int = 7
-    img_height: int = ...
-    img_width: int = ...
+    img_height: int = 256
+    img_width: int = 256
     val_split: float = 0.2
     augmentation: bool = True
 
@@ -50,7 +50,7 @@ class ExperimentConfig:
     experiment_name: str = "baseline_exp"
     random_seed: int = 42
     data: DataConfig = field(default_factory=DataConfig)
-    model: ModelConfig = field(default_facotry=ModelConfig)
+    model: ModelConfig = field(default_factory=ModelConfig)
     training: TrainingConfig = field(default_factory=TrainingConfig)
 
     def save(self, path: Path):
